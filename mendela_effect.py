@@ -58,6 +58,7 @@ mandela_effect_images = {
         "correct": "image1",
         "explanation": "The correct name is 'Looney Tunes' with a 'U', not 'Looney Toons'."
     },
+    
     "seahorse_emoji": {
         "image1": "images/seahorse_emoji.jpg",  # Single seahorse emoji image
         "correct": "False",  # The correct answer is 'False'
@@ -175,7 +176,7 @@ else:
             correct_img = safe_open_image(data[data["correct"]], resize_to=(300, 300))
             if correct_img:
                 st.image(correct_img, caption=f"Correct Answer: {answer}")
-
+        st.write(f"{'✅ Correct!' if is_correct else '❌ Incorrect.'}")
         st.write(f"**Explanation:** {data['explanation']}")
 
     # Restart button

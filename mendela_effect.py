@@ -68,7 +68,7 @@ mandela_effect_images = {
         "image": "images/amitabh_shahenshah.jpg",
         "option1": "Rishte mein toh hum tumhaare baap hote hai, naam hai Shahenshah.",
         "option2": "Rishte mein toh hum tumhaare baap lagte hai, naam hai Shahenshah.",
-        "correct": "option2",
+        "correct": "option1",
         "explanation": "The correct dialogue is: 'Rishte mein toh hum tumhaare baap hote hai, naam hai Shahenshah.'"
     }
 }

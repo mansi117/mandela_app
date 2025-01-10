@@ -63,7 +63,7 @@ mandela_effect_images = {
         "image1": "images/seahorse_emoji.jpg",  # Single seahorse emoji image
         "correct": "False",  # The correct answer is 'False'
         "explanation": "No, the Seahorse emoji does not exist in the current Unicode standard."
-    };
+    },
      "shahenshah_dialogue": {
         "image": "images/amitabh_shahenshah.jpg",
         "option1": "Rishte mein toh hum tumhaare baap hote hai, naam hai Shahenshah.",

@@ -63,6 +63,13 @@ mandela_effect_images = {
         "image1": "images/seahorse_emoji.jpg",  # Single seahorse emoji image
         "correct": "False",  # The correct answer is 'False'
         "explanation": "No, the Seahorse emoji does not exist in the current Unicode standard."
+    };
+     "shahenshah_dialogue": {
+        "image": "images/amitabh_shahenshah.jpg",
+        "option1": "Rishte mein toh hum tumhaare baap hote hai, naam hai Shahenshah.",
+        "option2": "Rishte mein toh hum tumhaare baap lagte hai, naam hai Shahenshah.",
+        "correct": "option2",
+        "explanation": "The correct dialogue is: 'Rishte mein toh hum tumhaare baap hote hai, naam hai Shahenshah.'"
     }
 }
 
@@ -124,7 +131,16 @@ if st.session_state.current_question < len(questions):
             if is_correct:
                 st.session_state.score += 1
             st.session_state.current_question += 1
-
+            
+ elif question == "shahenshah_dialogue":
+        st.write("Which version of this famous dialogue from the movie 'Shahenshah' is correct?")
+        
+        try:
+            amitabh_image = Image.open(data["image"]).resize((400, 300))
+            st.image(amitabh_image, caption="Amitabh Bachchan in Shahenshah")
+        except FileNotFoundError:
+            st.error("Image not found for Shahenshah question.")
+            
     # For all other image-based questions
     else:
         col1, col2 = st.columns(2)

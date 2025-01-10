@@ -22,6 +22,42 @@ mandela_effect_images = {
         "correct": "image1",
         "explanation": "The peace symbol has a vertical line in the center, which has been part of its iconic design."
     },
+     "pikachu_tail": {
+        "image1": "images/pikachu_black_tail.jpg",
+        "image2": "images/pikachu_no_black_tail.jpg",
+        "correct": "image2",
+        "explanation": "Pikachu has always had a solid yellow tail. It never had a black tip."
+    },
+    "starbucks_logo": {
+        "image1": "images/starbucks_incorrect_logo.jpg",
+        "image2": "images/starbucks_correct_logo.jpg",
+        "correct": "image2",
+        "explanation": "The Starbucks logo has always shown a two-tailed siren, never a single tail."
+    },
+    "volkswagen_logo": {
+        "image1": "images/volkswagen_no_gap.jpg",
+        "image2": "images/volkswagen_with_gap.jpg",
+        "correct": "image2",
+        "explanation": "The Volkswagen logo has always had a gap between the 'V' and 'W'."
+    },
+    "skechers_logo": {
+        "image1": "images/skechers_correct.jpg",
+        "image2": "images/sketchers_incorrect.jpg",
+        "correct": "image1",
+        "explanation": "The correct spelling is 'Skechers' with an 'E', not 'Sketchers'."
+    },
+    "kitkat_logo": {
+        "image1": "images/kitkat_with_dash.jpg",
+        "image2": "images/kitkat_no_dash.jpg",
+        "correct": "image2",
+        "explanation": "KitKat's logo has never had a dash between 'Kit' and 'Kat'."
+    },
+    "looney_tunes": {
+        "image1": "images/looney_tunes.jpg",
+        "image2": "images/looney_toons.jpg",
+        "correct": "image1",
+        "explanation": "The correct name is 'Looney Tunes' with a 'U', not 'Looney Toons'."
+    },
     "seahorse_emoji": {
         "image1": "images/seahorse_emoji.jpg",  # Single seahorse emoji image
         "correct": "False",  # The correct answer is 'False'

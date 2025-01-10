@@ -22,7 +22,7 @@ mandela_effect_images = {
         "correct": "image1",
         "explanation": "The peace symbol has a vertical line in the center, which has been part of its iconic design."
     },
-     "pikachu_tail": {
+    "pikachu_tail": {
         "image1": "images/pikachu_black_tail.jpg",
         "image2": "images/pikachu_no_black_tail.jpg",
         "correct": "image2",
@@ -58,30 +58,19 @@ mandela_effect_images = {
         "correct": "image1",
         "explanation": "The correct name is 'Looney Tunes' with a 'U', not 'Looney Toons'."
     },
-    
     "seahorse_emoji": {
-        "image1": "images/seahorse_emoji.jpg",  # Single seahorse emoji image
-        "correct": "False",  # The correct answer is 'False'
+        "image1": "images/seahorse_emoji.jpg",
+        "correct": "False",
         "explanation": "No, the Seahorse emoji does not exist in the current Unicode standard."
     },
-     "shahenshah_dialogue": {
+    "shahenshah_dialogue": {
         "image": "images/amitabh_shahenshah.jpg",
         "option1": "Rishte mein toh hum tumhaare baap hote hai, naam hai Shahenshah.",
         "option2": "Rishte mein toh hum tumhaare baap lagte hai, naam hai Shahenshah.",
-        "correct": "option1",
+        "correct": "option",
         "explanation": "The correct dialogue is: 'Rishte mein toh hum tumhaare baap hote hai, naam hai Shahenshah.'"
     }
 }
-
-# Helper function to check if file exists
-def safe_open_image(image_path, resize_to=None):
-    if os.path.exists(image_path):
-        img = Image.open(image_path)
-        if resize_to:
-            img = img.resize(resize_to)
-        return img
-    else:
-        return None
 
 # Streamlit App Setup
 st.title("Mandela Effect Quiz")
@@ -93,29 +82,29 @@ if "score" not in st.session_state:
 if "current_question" not in st.session_state:
     st.session_state.current_question = 0
 if "user_answers" not in st.session_state:
-    st.session_state.user_answers = []  # To store user answers and correctness
+    st.session_state.user_answers = []
 
 # List of questions
 questions = list(mandela_effect_images.keys())
 
+# Display progress bar
+st.write("### Progress:")
+progress = min(st.session_state.current_question / (len(questions) - 1), 1.0) if len(questions) > 1 else 1.0
+st.progress(progress)
+
 if st.session_state.current_question < len(questions):
-    # Get current question
     question = questions[st.session_state.current_question]
     data = mandela_effect_images[question]
-
-    # Display question
+    
     st.write(f"**Question {st.session_state.current_question + 1}: {question.replace('_', ' ').title()}**")
-
-    # Special handling for the Seahorse Emoji question
+    
     if question == "seahorse_emoji":
-        st.write("**Have you seen this seahorse image?Does this Seahorse emoji exist?**")
-        seahorse_image = safe_open_image(data["image1"], resize_to=(150, 150))
-        if seahorse_image:
+        try:
+            seahorse_image = Image.open(data["image1"]).resize((150, 150))
             st.image(seahorse_image, caption="Seahorse Emoji")
-        else:
-            st.write("Image not found!")
-
-        # Add buttons for True or False
+        except FileNotFoundError:
+            st.error("Image not found for the Seahorse Emoji question.")
+            
         if st.button("True", key=f"{question}_true"):
             user_choice = "True"
             is_correct = (user_choice == data["correct"])
@@ -123,7 +112,7 @@ if st.session_state.current_question < len(questions):
             if is_correct:
                 st.session_state.score += 1
             st.session_state.current_question += 1
-
+            
         if st.button("False", key=f"{question}_false"):
             user_choice = "False"
             is_correct = (user_choice == data["correct"])
@@ -141,62 +130,69 @@ if st.session_state.current_question < len(questions):
         except FileNotFoundError:
             st.error("Image not found for Shahenshah question.")
             
-    # For all other image-based questions
-    else:
         col1, col2 = st.columns(2)
-
+        
         with col1:
-            img1 = safe_open_image(data["image1"], resize_to=(300, 300))
-            if img1:
-                st.image(img1, caption="Option 1")
-            else:
-                st.write("Image not found!")
-
-            if st.button("Choose Option 1", key=f"{question}_1"):
-                user_choice = "image1"
+            st.write("Option 1:")
+            st.write(f"_{data['option1']}_")
+            if st.button("Choose Option 1", key=f"{question}_opt1"):
+                user_choice = "option1"
                 is_correct = (user_choice == data["correct"])
                 st.session_state.user_answers.append((question, "Option 1", is_correct))
                 if is_correct:
                     st.session_state.score += 1
                 st.session_state.current_question += 1
-
+                
         with col2:
-            img2 = safe_open_image(data["image2"], resize_to=(300, 300))
-            if img2:
-                st.image(img2, caption="Option 2")
-            else:
-                st.write("Image not found!")
-
-            if st.button("Choose Option 2", key=f"{question}_2"):
-                user_choice = "image2"
+            st.write("Option 2:")
+            st.write(f"_{data['option2']}_")
+            if st.button("Choose Option 2", key=f"{question}_opt2"):
+                user_choice = "option2"
                 is_correct = (user_choice == data["correct"])
                 st.session_state.user_answers.append((question, "Option 2", is_correct))
                 if is_correct:
                     st.session_state.score += 1
                 st.session_state.current_question += 1
+                
+    else:
+        col1, col2 = st.columns(2)
+        with col1:
+            try:
+                img1 = Image.open(data["image1"]).resize((300, 300))
+                st.image(img1, caption="Option 1")
+                if st.button("Choose Option 1", key=f"{question}_1"):
+                    user_choice = "image1"
+                    is_correct = (user_choice == data["correct"])
+                    st.session_state.user_answers.append((question, "Option 1", is_correct))
+                    if is_correct:
+                        st.session_state.score += 1
+                    st.session_state.current_question += 1
+            except FileNotFoundError:
+                st.error(f"Image not found for Option 1 in the question {question}.")
+                
+        with col2:
+            try:
+                img2 = Image.open(data["image2"]).resize((300, 300))
+                st.image(img2, caption="Option 2")
+                if st.button("Choose Option 2", key=f"{question}_2"):
+                    user_choice = "image2"
+                    is_correct = (user_choice == data["correct"])
+                    st.session_state.user_answers.append((question, "Option 2", is_correct))
+                    if is_correct:
+                        st.session_state.score += 1
+                    st.session_state.current_question += 1
+            except FileNotFoundError:
+                st.error(f"Image not found for Option 2 in the question {question}.")
+                
 else:
-    # Show final score and answer feedback
     st.balloons()
     st.write(f"### Quiz Complete! 🎉 Your Score: {st.session_state.score}/{len(questions)}")
-
-    # Detailed feedback
+    
     st.write("### Detailed Feedback:")
     for question, answer, is_correct in st.session_state.user_answers:
         data = mandela_effect_images[question]
         st.write(f"**{question.replace('_', ' ').title()}**")
-        if question == "seahorse_emoji":
-            img = safe_open_image(data["image1"], resize_to=(150, 150))
-            if img:
-                st.image(img, caption="Seahorse Emoji")
-        else:
-            correct_img = safe_open_image(data[data["correct"]], resize_to=(300, 300))
-            if correct_img:
-                st.image(correct_img, caption=f"Correct Answer: {answer}")
+        st.write(f"Your answer: {answer}")
         st.write(f"{'✅ Correct!' if is_correct else '❌ Incorrect.'}")
-        st.write(f"**Explanation:** {data['explanation']}")
-
-    # Restart button
-    if st.button("Restart Quiz"):
-        st.session_state.score = 0
-        st.session_state.current_question = 0
-        st.session_state.user_answers = []
+        st.write(f"Explanation: {data['explanation']}")
+        st.write("---")

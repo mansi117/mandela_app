@@ -132,7 +132,7 @@ if st.session_state.current_question < len(questions):
                 st.session_state.score += 1
             st.session_state.current_question += 1
             
- elif question == "shahenshah_dialogue":
+    elif question == "shahenshah_dialogue":
         st.write("Which version of this famous dialogue from the movie 'Shahenshah' is correct?")
         
         try:

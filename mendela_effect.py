@@ -100,6 +100,7 @@ if st.session_state.current_question < len(questions):
 
     # Special handling for the Seahorse Emoji question
     if question == "seahorse_emoji":
+        st.write("**Have you seen this seahorse image?Does this Seahorse emoji exist?**")
         seahorse_image = safe_open_image(data["image1"], resize_to=(150, 150))
         if seahorse_image:
             st.image(seahorse_image, caption="Seahorse Emoji")
